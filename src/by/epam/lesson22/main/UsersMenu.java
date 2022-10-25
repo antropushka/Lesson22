@@ -6,6 +6,7 @@ import by.epam.lesson22.controller.command.UsersController;
 import by.epam.lesson22.controller.dto.Request;
 import by.epam.lesson22.controller.dto.Response;
 import by.epam.lesson22.dao.UsersRepository;
+import by.epam.lesson22.view.ConsoleInput;
 import by.epam.lesson22.view.ConsoleOutput;
 
 import java.util.Scanner;
@@ -16,6 +17,7 @@ public class UsersMenu {
     UsersController usersController = new UsersController();
     EmailValidator emailValidator = new EmailValidator();
     ConsoleOutput consoleOutput = ConsoleOutput.getInstance();
+    ConsoleInput consoleInput = ConsoleInput.getInstance();
 
 
     public void startProgram() {
@@ -35,7 +37,7 @@ public class UsersMenu {
             switch (userChoice) {
 
             case 1:
-                Request requestRegistration = new Request(CommandName.REGISTRATION.name());
+                Request requestRegistration = new Request(CommandName.REGISTRATION.name(), consoleInput.enterUsersDate());
                 Response responseRegistration = usersController.makeResponse(requestRegistration);
                 System.out.println(UsersRepository.getUsersDateBase().getUsers());
                 break;

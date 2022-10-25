@@ -12,7 +12,7 @@ public class RegistrationCommand implements Command {
     @Override
     public Response execute(Request request) {
         Response response = null;
-        usersLogic.registerOfNewUser();
+        usersLogic.register(response.getUser());
         String commandName = request.getCommandName();
         return new Response(commandName);
     }

@@ -1,5 +1,7 @@
 package by.epam.lesson22.logic;
 
+import by.epam.lesson22.dao.DAOException;
+import by.epam.lesson22.middleware.*;
 import by.epam.lesson22.validator.EmailValidator;
 import by.epam.lesson22.validator.LoginValidator;
 import by.epam.lesson22.validator.PasswordValidator;
@@ -9,12 +11,10 @@ import by.epam.lesson22.bean.UsersDateBase;
 import by.epam.lesson22.dao.UsersRepository;
 import by.epam.lesson22.view.ConsoleOutput;
 
-import java.util.Scanner;
-
 public class UsersLogic {
 
     private final UsersDateBase usersDateBase = UsersRepository.getUsersDateBase();
-    Scanner scanner = new Scanner(System.in);
+    private Middleware middleware;
 
     private static final UsersLogic instance = new UsersLogic();
     ConsoleOutput consoleOutput = ConsoleOutput.getInstance();
@@ -31,26 +31,16 @@ public class UsersLogic {
         return instance;
     }
 
-    public void registerOfNewUser() {
-        User user = new User("", "", "", "");
-        System.out.println("create a login");
-        user.setLogin(scanner.nextLine());
-        System.out.println("create a password");
-        user.setPassword(scanner.nextLine());
-        System.out.println("enter your email address");
-        user.setEmail(scanner.nextLine());
-        System.out.println("enter the phone number in the format XXX(XX)XXX-XX-XX");
-        user.setTelephoneNum(scanner.nextLine());
-        // дополнить, если заданный догин уже занят
-        if (loginValidator.validate(user.getLogin())
-                && emailValidator.validate(user.getEmail())
-                && phoneNumValidator.validate(user.getTelephoneNum())
-                && passwordValidator.validate(user.getPassword())) {
-            UsersRepository.getUsersDateBase().addUsers(user);
+    public void register(User user) throws DAOException {
+        Middleware middleware = Middleware.link(
+                new LoginExistsMiddleware(usersDateBase),
+                new EmailExistsMiddleware(usersDateBase),
+                new PhoneNumExistsMiddleware(usersDateBase),
+                new PasswordExistsMiddleware(usersDateBase));
+        if (middleware.check(user)) {
+            usersDateBase.addUsers(user);
             consoleOutput.successRegistrationMessage();
-            consoleOutput.printInfoAboutUser(user);
-        } else {
-                consoleOutput.failedRegistrationMessage();
         }
     }
+
 }

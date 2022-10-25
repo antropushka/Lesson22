@@ -23,6 +23,7 @@ public class Request {
         this.user = user;
     }
 
+
     public String getCommandName() {
         return commandName;
     }
