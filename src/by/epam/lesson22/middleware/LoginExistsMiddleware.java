@@ -30,23 +30,6 @@ public class LoginExistsMiddleware extends Middleware {
         return checkNext(user);
     }
 
-    //    @Override
-//    public boolean check(User user) {
-//        if (loginValidator.validate(user.getLogin())) {
-//            if (usersDateBase.getUsers().containsKey(user.getLogin())) {
-//                if (!usersLogic.isCorrectPassword(user.getLogin(), user.getPassword())) {
-//                    System.out.println("Wrong password!");
-//                    return false;
-//                } else if (usersLogic.isCorrectPassword(user.getLogin(), user.getPassword())) {
-//                    System.out.println("Good password!");
-//                    return true;
-//                }
-//            } else if (!usersDateBase.getUsers().containsKey(user.getLogin())) {
-//                System.out.println("This login is not exist!");
-//                return true;
-//            }
-//        }
-//        return checkNext(user);
-//    }
+
 
 }

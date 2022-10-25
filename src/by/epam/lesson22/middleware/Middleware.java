@@ -25,21 +25,5 @@ public abstract class Middleware {
 
     }
 
-//    public abstract boolean check();
-//
-//    public abstract boolean checkForLogIn(String login, String password);
-//
-//    protected boolean checkNextForRegister(String checkedParameter) {
-//        if (next == null) {
-//            return true;
-//        }
-//        return next.checkForRegister(checkedParameter);
-//    }
-//
-//    protected boolean checkNextForLogIn(String checkedParameter, String password) {
-//        if (next == null) {
-//            return true;
-//        }
-//        return next.checkForLogIn(checkedParameter, password);
-//    }
+
 }
